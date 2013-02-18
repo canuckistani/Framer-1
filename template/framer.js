@@ -14,6 +14,8 @@ require.modules = {};
 require.cache = {};
 require.extensions = [".js",".coffee",".json"];
 
+var CSSMatrix = window.CSSMatrix || window.MozCSSMatrix || WebKitCSSMatrix;
+
 require._core = {
     'assert': true,
     'events': true,
@@ -894,12 +896,12 @@ require.define("/src/views/view.coffee",function(require,module,exports,__dirnam
 
     View.define("_matrix", {
       get: function() {
-        return this.__matrix || (this.__matrix = new WebKitCSSMatrix(this._element.style.webkitTransform));
+        return this.__matrix || (this.__matrix = new CSSMatrix(this._element.style.webkitTransform));
       },
       set: function(value) {
         var m, values;
         m = value || this._matrix;
-        if (!m instanceof WebKitCSSMatrix) {
+        if (!m instanceof CSSMatrix) {
           return this._element.style.webkitTransform = null;
         }
         values = "				matrix3d(					" + m.m11 + ", " + m.m12 + ", " + m.m13 + ", " + m.m14 + ", 					" + m.m21 + ", " + m.m22 + ", " + m.m23 + ", " + m.m24 + ", 					" + m.m31 + ", " + m.m32 + ", " + m.m33 + ", " + m.m34 + ", 					" + m.m41 + ", " + m.m42 + ", " + m.m43 + ", " + m.m44 + ")";

@@ -12,6 +12,8 @@ _ = require "underscore"
 
 exports.ViewList = []
 
+CSSMatrix = window.CSSMatrix || window.WebKitCSSMatrix || MozCSSMatrix;
+
 
 class View extends Frame
 	
@@ -125,14 +127,14 @@ class View extends Frame
 	
 	@define "_matrix"
 		get: -> 
-			return @__matrix or @__matrix = new WebKitCSSMatrix @_element.style.webkitTransform
+			return @__matrix or @__matrix = new CSSMatrix @_element.style.webkitTransform
 			
 		set: (value) ->
 		
 			m = value or @_matrix
 			
 			# Blue pill
-			if not m instanceof WebKitCSSMatrix
+			if not m instanceof CSSMatrix
 				return @_element.style.webkitTransform = null
 			
 			# Red pill
